@@ -1,15 +1,15 @@
 server:
   port: 8761
 
-  eureka:
-    instance:
-      hostname: localhost
+eureka:
+  instance:
+    hostname: localhost
 
-    client:
-      registerWithEureka: false
-      fetchRegistry: false
-      serviceUrl:
-        defaultZone: http://${server.eureka.instance.hostname}:${server.port}/eureka/
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${server.eureka.instance.hostname}:${server.port}/eureka/
 
 
 # registerWithEureka 和 fetchRegistry 的属性为 false 时，用来标识自己是一个 eureka server
