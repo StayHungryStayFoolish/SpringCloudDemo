@@ -13,3 +13,5 @@ server:
 
 
 # registerWithEureka 和 fetchRegistry 的属性为 false 时，用来标识自己是一个 eureka server
+# eureka server 是有界面的。
+# http://localhost:8761
