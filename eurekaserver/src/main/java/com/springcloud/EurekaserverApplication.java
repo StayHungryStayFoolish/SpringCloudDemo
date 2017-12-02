@@ -17,3 +17,8 @@ public class EurekaserverApplication {
 		SpringApplication.run(EurekaserverApplication.class, args);
 	}
 }
+
+/**
+ 服务注册中心启动链接：
+ http://localhost:8761
+ */
