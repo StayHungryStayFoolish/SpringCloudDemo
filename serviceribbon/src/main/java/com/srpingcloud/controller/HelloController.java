@@ -2,10 +2,7 @@ package com.srpingcloud.controller;
 
 import com.srpingcloud.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by bonismo@hotmail.com
@@ -17,10 +14,8 @@ public class HelloController {
     @Autowired
     private HelloService helloService;
 
-    @ResponseBody
     @RequestMapping("/hi")
-    public String hi(@PathVariable String name) {
-        System.out.println("进入方法");
+    public String hi(@RequestParam String name) {
         return helloService.hiService(name);
     }
 }
