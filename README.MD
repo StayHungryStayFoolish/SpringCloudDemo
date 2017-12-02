@@ -16,6 +16,11 @@ http://localhost:8761
 
 建立一个服务客户端
 
+**一个服务启动多个实例**
+
+更改 resources 下的 application.yml port 配置
+然后再次运行 EurekaclientApplication ，不要重启当前服务
+
 URL:
 
 http://localhost:8762/hi?name=***
