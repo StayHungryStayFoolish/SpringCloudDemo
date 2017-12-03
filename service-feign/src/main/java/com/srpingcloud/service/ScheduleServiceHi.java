@@ -15,6 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "eureka-client")
 public interface ScheduleServiceHi {
 
+    /**
+     * @RequestMapping 的路由路径对应的是 Eureka-Client 的路由路径
+     * 当 Web Controller层 对外暴露 API 时，调用注入的该接口方法，
+     * 会通过当前路由调用 Eureka-Client 的服务
+     * @param name
+     * @return
+     */
     @RequestMapping(value = "/hi", method = RequestMethod.GET)
     String sayHiFromClient(@RequestParam(value = "name") String name);
 }

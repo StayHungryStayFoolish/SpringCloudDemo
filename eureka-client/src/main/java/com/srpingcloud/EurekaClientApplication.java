@@ -36,6 +36,8 @@ public class EurekaClientApplication {
 }
 
 /**
+ *
+ * @RequestMapping 的路由路径对应的是 Service-Feign 的 Service 接口路由路径
  * http://localhost:8762/hi?name=springcloud
  * http://localhost:8763/hi?name=springcloud
  *
