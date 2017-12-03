@@ -61,4 +61,4 @@
 - EurekaClient(服务提供客户端)，向 EurekaServer(服务注册中心)注册时，
   会提供一些`元数据`，例如：`主机名字`，`端口`，`URL`，`主页`等。
 
-# 推荐 Resources 文件夹内的格式采用 properties，yml 格式要求太严格，容易出问题
+### 推荐 Resources 文件夹内的格式采用 properties，yml 格式要求太严格，容易出问题

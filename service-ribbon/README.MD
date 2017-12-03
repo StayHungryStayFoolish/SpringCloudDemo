@@ -36,6 +36,23 @@ spring-cloud-dependencies
 
     3.1  resources 下端口：8764
 
+# Ribbon 主要实现方法
+
+- 通过注册一个 Bean : RestTemplate ，SpringCloud 会注入到 IOC 容器内
+
+- 通过在业务层 Service ，调用 getForObject(); 方法传入 服务客户端 URL 参数
+  来消费提供的服务。
+
+- Web 层，注入 Service 层，直接调用方法。
+
+# 业务流程大致情况
+
+1. 调用 Service-Ribbon 暴露的 API
+
+2. Service-Ribbon 向服务中心注册
+
+3. 同时 Service-Ribbon 通过 restTemplate 调用接口，通过 Ribbon 进行负载均衡，轮流访问 Eureka-Client 的实例 instance
+
 # 架构情况
 
 - 一个服务注册中心，eureka server,端口为8761
