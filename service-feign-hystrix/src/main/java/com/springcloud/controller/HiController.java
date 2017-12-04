@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HiController {
 
+    // 会包编译错误，提示不止一个 Bean，但不影响程序运行
     @Autowired
-    private ScheduleServiceHi scheduleServiceHi;
+    private ScheduleServiceHi serviceHi;
 
     @RequestMapping(value = "/hi",method = RequestMethod.GET)
     public String sayHi(@RequestParam String name) {
-        return scheduleServiceHi.sayHiService(name);
+        return serviceHi.sayHiFromClient(name);
     }
 }
