@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by bonismo@hotmail.com
  * 上午10:51 on 17/12/4.
+ * 通过@Component 注入到 ICO 容器中
  */
 @Component
 public class ScheduleServiceHiHystrix implements ScheduleServiceHi {
