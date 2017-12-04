@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.Executors;
 
 /**
  * Created by bonismo@hotmail.com
@@ -54,3 +53,17 @@ public class MyFilter extends ZuulFilter {
         return null;
     }
 }
+
+/**
+
+ filterType: 返回一个字符串代表过滤器的类型，在 zuul 中定义了四种不同生命周期的过滤器类型
+
+    pre  路由之前
+    routing 路由之时
+    post 路由之后
+    error 发送错误调用
+    filterOrder 过滤的顺序
+    shouldFilter 可以写逻辑判断，是否要果断，true 永远过滤
+    run 过滤器具体逻辑。包括 sql,nosql 判断到底有没有权限访问
+
+ */
