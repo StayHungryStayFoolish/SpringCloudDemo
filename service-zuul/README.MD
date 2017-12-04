@@ -66,3 +66,15 @@ URL： http://localhost:8769/api-a/hi?name=zuul&token=***
 api-a : yml 文件的 routes名字
 
 token : MyFilter 的前处理内的逻辑
+
+## 启动模式
+
+1. Eureka-Server 服务注册中心
+
+2. Eureka-Client 服务提供客户端
+
+3. Service-Ribbon-Hystrix 负载均衡、断路器
+
+4. Service-Feign-Hystrix 负载均衡、断路器
+
+5. Service-Zuul 智能路由

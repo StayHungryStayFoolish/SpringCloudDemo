@@ -75,6 +75,10 @@
 
 ## 断路器模式
 
+### Service-Ribbon-Hystrix
+
+### Service-Feign-Hystrix
+
 - 微服务架构中，根据业务来拆分成一个个服务。
 
 - 服务与服务之间可以相互调用(RPC)。在Spring Cloud可以用RestTemplate+Ribbon和Feign来调用。
@@ -94,3 +98,22 @@
 ![](img/hystrix.png)
 
   断路打开后，可用避免连锁故障，fallback方法可以直接返回一个固定值。
+
+## 智能路由
+
+### Zuul
+
+Zuul 主要功能是`路由转发`和`过滤器`。
+
+路由是功能是微服务的一部分。比如／api/user转发到到user服务，/api/shop转发到到shop服务。
+
+Zuul默认和Ribbon结合实现了负载均衡的功能。
+
+
+![](img/zuul.png)
+
+在Spring Cloud微服务系统中，一种常见的负载均衡方式是，
+客户端的请求首先经过负载均衡（zuul、Ngnix），再到达服务网关（zuul集群），
+然后再到具体的服。，服务统一注册到高可用的服务注册中心集群，
+服务的所有的配置文件由配置服务管理，
+配置服务的配置文件放在git仓库，方便开发人员随时改配置。
