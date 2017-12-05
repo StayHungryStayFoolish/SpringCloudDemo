@@ -1,4 +1,4 @@
-# Spring Cloud 服务调用（一）
+# Spring Cloud 服务调用 Ribbon（一）
 
 # Ribbon + TestTemplate
 
