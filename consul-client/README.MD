@@ -64,3 +64,8 @@ CTRL + C
 |join|将 agent 加入 consul 集群|consul join IP|
 |members|列出 consul cluster 集群中的 members|consul members|
 |leave|将节点移除所在集群|consul leave|
+
+
+使用 consul 注册服务时，必须关闭 health
+
+management.health.defaults.enabled = false
