@@ -28,10 +28,16 @@ public class DcController {
         return "ClientName is " + name + " , I am from port: " + port;
     }
 
-
+    // Warning,But can running
+    // Spring Cloud 对服务治理做的一层抽象，可以屏蔽 Eureka 和 Consul 服务治理的实现细节
     @Autowired
     DiscoveryClient discoveryClient;
 
+    /**
+     * getServices(); 源码是 List
+     *
+     * @return
+     */
     @GetMapping("/dc")
     public String dc() {
         String services = "Services : " + discoveryClient.getServices();
