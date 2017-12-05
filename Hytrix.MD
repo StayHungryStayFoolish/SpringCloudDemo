@@ -87,3 +87,18 @@
 Hystrix 通过上面一系列机制，实现了对依赖资源故障的端口、对降级策略的自动切换、对主逻辑
 自动回复机制。使得微服务在依赖外部服务或资源的时候，得到了很好保护，同时对一些具备降级业务需求可以实现自动切换与回复，
 相比于设置开关由监控和原味来进行切换的传统实现方式更为智能和高效。
+
+## Hystrix Dashboard
+
+Hystrix 仪表盘 URL：http://localhost:端口号/hystrix
+
+三种监控方式：
+
+   1. 默认集群监控：`http://turbine-hostname:port/turbine.stream` 开启，实现对默认集群的监控
+
+   2. 指定集群监控：`http://turbine-hostname:port/turbine.stream?cluster=[clusterName]` 开启，实现对 clusterName 集群的监控
+
+   3. 单体应用监控：`http://turbine-app:port/hystrix.stream` 开启，实现对具体某个服务实例的监控
+
+1.2. 对集群监控，需要整合 Turbine 才可以实现。
+
