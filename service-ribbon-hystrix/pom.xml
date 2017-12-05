@@ -81,7 +81,12 @@
 			<artifactId>spring-cloud-commons</artifactId>
 			<version>1.3.0.RELEASE</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-hystrix-dashboard</artifactId>
+            <version>1.2.7.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 	<!-- 引入 Spring Cloud 依赖，作用是其他 spring-cloud 组件都引用这个版本 -->
 	<dependencyManagement>

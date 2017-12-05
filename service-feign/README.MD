@@ -8,7 +8,7 @@
 
  - 使用 Feign 只需要创建一个`接口`并注解为 @FeignClient 使用 value 标识 服务提供客户端的 name 属性即可
 
- - 具有可插拔的注解特性，使用 Feign 注解和 JAX-RS 注解。
+ - 具有可插拔的注解特性，使用 Feign 注解和 JAX-RS 注解，也支持课插拔的编码器和解码器。
 
  - Feign 默认继承 Ribbon，和 Eureka 结合，默认实现`负载均衡`效果
 
