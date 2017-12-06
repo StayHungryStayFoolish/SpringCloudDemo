@@ -25,6 +25,7 @@ public class Sender {
     public void send() {
         String context = "Hello" + new Date();
         System.out.println("Sender : " + context);
+        // convertAndSend(消息队列名字，消息内容);
         this.rabbitTemplate.convertAndSend("Hello", context);
     }
 }
