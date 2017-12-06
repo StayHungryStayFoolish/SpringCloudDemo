@@ -2,8 +2,10 @@ package com.springcloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @EnableZuulProxy
@@ -16,5 +18,10 @@ public class ServiceZuulApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceZuulApplication.class, args);
+	}
+
+	@Bean
+	public DefaultErrorAttributes errorAttributes() {
+		return new MyErrorAttributes();
 	}
 }
