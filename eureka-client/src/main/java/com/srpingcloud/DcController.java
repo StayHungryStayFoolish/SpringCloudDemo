@@ -49,7 +49,7 @@ public class DcController {
      */
     @GetMapping("/dc")
     public String dc() throws InterruptedException {
-        Thread.sleep(5000L);
+//        Thread.sleep(5000L);
         String services = "Services : " + discoveryClient.getServices();
         System.out.println("Services --> "+services);
         return services;

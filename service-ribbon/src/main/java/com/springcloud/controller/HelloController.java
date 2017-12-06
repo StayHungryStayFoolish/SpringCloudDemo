@@ -26,18 +26,18 @@ public class HelloController {
 
     // 如果调用 consumer 方法，需要在主程序中注释掉  @LoadBalanced，该注解才有效
     // 不然 status=404
-    @Autowired
-    LoadBalancerClient loadBalancerClient;
+//    @Autowired
+//    LoadBalancerClient loadBalancerClient;
 
-    @GetMapping(value = "/consumer")
-    public String consumer() {
+//    @GetMapping(value = "/consumer")
+//    public String consumer() {
         // choose(); 使用负载均衡选出 "eureka-client" 的一个服务实例
         // 服务实例的基本信息存储在 ServiceInstance 中
-        ServiceInstance serviceInstance = loadBalancerClient.choose("eureka-client");
-        String url = "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort()+"/dc";
-        System.out.println("URL==>"+url);
-        return restTemplate.getForObject(url, String.class);
-    }
+//        ServiceInstance serviceInstance = loadBalancerClient.choose("eureka-client");
+//        String url = "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort()+"/dc";
+//        System.out.println("URL==>"+url);
+//        return restTemplate.getForObject(url, String.class);
+//    }
 
     @RequestMapping(value = "/hi")
     public String hi(@RequestParam String name) {
