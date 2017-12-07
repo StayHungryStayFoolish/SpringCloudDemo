@@ -1,4 +1,4 @@
-package com.springcloud.controller;
+package com.springcloud;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +53,8 @@ class Message<T> {
     private int code;//错误码
     private String msg;// 说明信息
     private T data;//数据信息
-    static final String SUCCESS = "SUCCESS";
-    static final String FAIL = "FAIL";
+    static final String SUCCESS = "0";
+    static final String FAIL = "1";
 
     public Message() {
         this.result = SUCCESS;

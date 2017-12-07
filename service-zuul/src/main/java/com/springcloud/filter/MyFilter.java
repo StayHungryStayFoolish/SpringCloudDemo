@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by bonismo@hotmail.com
  * 下午1:54 on 17/12/4.
+ *
+ * 自定义网关过滤
  */
 @Component
 public class MyFilter extends ZuulFilter {
@@ -44,20 +46,20 @@ public class MyFilter extends ZuulFilter {
             ctx.set("error.status_code", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             ctx.set("error.exception",e);
         }
-//        HttpServletRequest request = ctx.getRequest();
-//        logger.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
-//        Object accessToken = request.getParameter("token");
-//        if (accessToken == null) {
-//            logger.warn("Token is empty");
-//            ctx.setSendZuulResponse(false);
-//            ctx.setResponseStatusCode(401);
-//            try {
-//                ctx.getResponse().getWriter().write("Token is empty");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
+        HttpServletRequest request = ctx.getRequest();
+        logger.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
+        Object accessToken = request.getParameter("token");
+        if (accessToken == null) {
+            logger.warn("Token is empty");
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(401);
+            try {
+                ctx.getResponse().getWriter().write("Token is empty");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
         logger.info("Ok !------------------------");
         return null;
     }

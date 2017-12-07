@@ -1,12 +1,11 @@
 package com.springcloud;
 
+import com.springcloud.filter.MyFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
-
 /**
  * @EnableZuulProxy
  * 该注解 开启 Zuul 功能
@@ -21,7 +20,7 @@ public class ServiceZuulApplication {
 	}
 
 	@Bean
-	public DefaultErrorAttributes errorAttributes() {
-		return new MyErrorAttributes();
+	public  MyFilter myFilter() {
+		return new MyFilter();
 	}
 }
