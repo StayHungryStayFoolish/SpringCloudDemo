@@ -16,7 +16,7 @@
 
 请求进入 `Zuul` 之后的整个调用链：
 
-`ZuulServlet # service` -> `FilterProcess # processZuulFilter` -> `ZuulFilter # runFilter` -> `ZuulFilter # run`
+`ZuulServlet # service` -> `FilterProcess # processZuulFilter` -> `ZuulFilter # runFilter` -> `[具体实现类]ZuulFilter # run`
 
 ## Zuul 调用链分析
 
