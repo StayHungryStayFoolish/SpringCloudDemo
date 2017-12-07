@@ -40,11 +40,9 @@ public class MyFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         try {
             doSomething();
-            System.out.println("F==============F");
         } catch (Exception e) {
             ctx.set("error.status_code", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             ctx.set("error.exception",e);
-//            ctx.set("error.message","有一些错误发生");
         }
 //        HttpServletRequest request = ctx.getRequest();
 //        logger.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
