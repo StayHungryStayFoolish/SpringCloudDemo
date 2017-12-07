@@ -129,13 +129,14 @@
                 copy = ctx.copy();
             }
 
+            // ****该方法流程没有捕获异常，所有异常都是从 ZuulFilter 中获取的
             ZuulFilterResult result = filter.runFilter();
             ExecutionStatus s = result.getStatus();
             execTime = System.currentTimeMillis() - ltime;
 
             switch (s) {
                 case FAILED:
-                    t = result.getException(); // 获取异常
+                    t = result.getException(); // FAILED 状态，执行失败，捕获异常
                     ctx.addFilterExecutionSummary(filterName, ExecutionStatus.FAILED.name(), execTime);
                     break;
                 case SUCCESS:
@@ -175,3 +176,38 @@
 FilterProcessor 的 processZuulFilter() 可以看出，该方法调用了 ZuulFilter，
 并且异常会重新抛出，如果`非 ZuulException` 则转为状态码为 `500` 的 ZuulException.
 
+**ZuulFilter 中抛出任何形式的异常，最终都会被转化为 ZuulException 异常，并抛给上层调用者。即 ZuulServlet # service()，上述代码并没有
+ 捕获 ZuulFilter 执行的异常，而是从 ZuulFilterResult 获取的，详见上边代码注释。**
+
+#### 3. ZuulFilter # runFilter();
+
+ ```java
+     /**
+      * runFilter checks !isFilterDisabled() and shouldFilter(). The run() method is invoked if both are true.
+      *
+      * @return the return from ZuulFilterResult
+      */
+     public ZuulFilterResult runFilter() {
+         ZuulFilterResult zr = new ZuulFilterResult();
+         if (!isFilterDisabled()) {
+             if (shouldFilter()) {
+                 Tracer t = TracerFactory.instance().startMicroTracer("ZUUL::" + this.getClass().getSimpleName());
+                 try {
+                     Object res = run(); // run() 方法继承接口 IZuulFilter，此处调用的是 ZuulFilter 某个实现类的 run 方法
+                     zr = new ZuulFilterResult(res, ExecutionStatus.SUCCESS);
+                 } catch (Throwable e) {
+                     t.setName("ZUUL::" + this.getClass().getSimpleName() + " failed");
+                     zr = new ZuulFilterResult(ExecutionStatus.FAILED);
+                     zr.setException(e);
+                 } finally {
+                     t.stopAndLog();
+                 }
+             } else {
+                 zr = new ZuulFilterResult(ExecutionStatus.SKIPPED);
+             }
+         }
+         return zr;
+     }
+ ```
+
+调用 run(); 方法生成对象，如果不抛出异常，返回状态成功。如果抛出异常，返回失败，同时将异常信息设置到返回结果中。
