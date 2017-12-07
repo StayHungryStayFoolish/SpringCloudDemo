@@ -20,7 +20,7 @@
 
 ## Zuul 调用链分析
 
-1. 请求首先进入 com.netflix.zuul.http.ZuulServlet 的 service() 方法。从包名`http`可以看出直接面向请求
+#### 1. 请求首先进入 com.netflix.zuul.http.ZuulServlet 的 service() 方法。从包名`http`可以看出直接面向请求
 
 ```java
     try {
@@ -109,4 +109,69 @@
 
 异常信息在 `1.` 内被 RequestContext 加入到了上下文中，进入了 `2.` error() 方法进行处理，
 从而最终进入 FilterProcessor `3.` 最后处理。
+
+![](img/ZuulServlet.jpeg)
+
+#### 2. FilterProcess 调用 processZuulFilter(); 方法源码
+#### public Object processZuulFilter(ZuulFilter filter) throws ZuulException
+
+```java
+       try {
+            long ltime = System.currentTimeMillis();
+            filterName = filter.getClass().getSimpleName();
+
+            RequestContext copy = null;
+            Object o = null;
+            Throwable t = null; // ***
+
+            if (bDebug) {
+                Debug.addRoutingDebug("Filter " + filter.filterType() + " " + filter.filterOrder() + " " + filterName);
+                copy = ctx.copy();
+            }
+
+            ZuulFilterResult result = filter.runFilter();
+            ExecutionStatus s = result.getStatus();
+            execTime = System.currentTimeMillis() - ltime;
+
+            switch (s) {
+                case FAILED:
+                    t = result.getException(); // 获取异常
+                    ctx.addFilterExecutionSummary(filterName, ExecutionStatus.FAILED.name(), execTime);
+                    break;
+                case SUCCESS:
+                    o = result.getResult();
+                    ctx.addFilterExecutionSummary(filterName, ExecutionStatus.SUCCESS.name(), execTime);
+                    if (bDebug) {
+                        Debug.addRoutingDebug("Filter {" + filterName + " TYPE:" + filter.filterType() + " ORDER:" + filter.filterOrder() + "} Execution time = " + execTime + "ms");
+                        Debug.compareContextState(filterName, copy);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (t != null) throw t;
+
+            usageNotifier.notify(filter, s);
+            return o;
+
+       } catch (Throwable e) {
+            if (bDebug) {
+                Debug.addRoutingDebug("Running Filter failed " + filterName + " type:" + filter.filterType() + " order:" + filter.filterOrder() + " " + e.getMessage());
+            }
+            usageNotifier.notify(filter, ExecutionStatus.FAILED);
+            // 如果是 ZuulException，则抛出
+            if (e instanceof ZuulException) {
+                throw (ZuulException) e; // 转化为 ZuulException
+            } else { // 如果不是 ZuulException 的实例，则转为 500 状态码的 ZuulException
+                // 转化为 ZuulException
+                ZuulException ex = new ZuulException(e, "Filter threw Exception", 500, filter.filterType() + ":" + filterName);
+                ctx.addFilterExecutionSummary(filterName, ExecutionStatus.FAILED.name(), execTime);
+                throw ex;
+            }
+       }
+```
+
+FilterProcessor 的 processZuulFilter() 可以看出，该方法调用了 ZuulFilter，
+并且异常会重新抛出，如果`非 ZuulException` 则转为状态码为 `500` 的 ZuulException.
 
