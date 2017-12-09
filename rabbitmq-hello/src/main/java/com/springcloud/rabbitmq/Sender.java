@@ -1,6 +1,5 @@
 package com.springcloud.rabbitmq;
 
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
